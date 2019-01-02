@@ -1,0 +1,6 @@
+module.exports = {
+  UPDATED: 'UPDATED',
+  FAILED: 'FAILED',
+  CREATED: 'CREATED',
+  DELETED: 'DELETED',
+}
