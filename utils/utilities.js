@@ -1,6 +1,6 @@
-const execFunction = (err, data, res) => {
+const execFunction = (err, errNo, data, res) => {
   if (err) {
-    res.json(404, err);
+    res.status(errNo).json(err);
   } else {
     res.json(data);
   }

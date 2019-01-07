@@ -39,4 +39,4 @@ let schema = new mg.Schema({
   saleDayEnd: Date
 }, options);
 
-module.exports = mg.model('productList', schema);
+module.exports = mg.model('Product', schema);

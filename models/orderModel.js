@@ -50,4 +50,4 @@ let schema = new mg.Schema({
   }
 }, options);
 
-module.exports = mg.model('orderList', schema);
+module.exports = mg.model('Order', schema);

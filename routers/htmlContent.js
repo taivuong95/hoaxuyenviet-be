@@ -9,11 +9,11 @@ router.post('/htmlContent', (req, res) => {
   htmlContentModel.findById("htmlContent", (err, data) => {
     if (data) {
       htmlContentModel.updateOne(req.body, (err, data) => {
-        util.execFunction(err, actionName.UPDATED, res);
+        util.execFunction(err, 404, actionName.UPDATED, res);
       })
     } else {
       htmlContentModel.create(req.body, (err, data) => {
-        util.execFunction(err, actionName.CREATED, res);
+        util.execFunction(err, 404, actionName.CREATED, res);
       })
     }
   })
@@ -22,7 +22,7 @@ router.post('/htmlContent', (req, res) => {
 // Get html content
 router.get('/htmlContent', (req, res) => {
   htmlContentModel.findOne((err, data) => {
-    util.execFunction(err, data, res);
+    util.execFunction(err, 404, data, res);
   })
 })
 
