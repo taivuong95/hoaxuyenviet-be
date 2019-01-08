@@ -1,0 +1,49 @@
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<button id="customButton">Purchase</button>
+
+<script>
+  var handler = StripeCheckout.configure({
+    key: 'pk_test_gUOofIWJiaQuU1NKoTkeTLcg',
+    image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+    locale: 'auto',
+    token: function (token) {
+      console.log(token);
+      // You can access the token ID with `token.id`.
+      // Get the token ID to your server-side code for use.
+      let item = {
+        total: 200000
+      }
+      fetch('http://localhost:8000/charge', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          stripeTokenId: token.id,
+          data: item
+        })
+      }).then((res) => console.log(res)).catch((err) => console.log(err))
+    }
+  });
+
+  document.getElementById('customButton').addEventListener('click', function (e) {
+    // Open Checkout with further options:
+    handler.open({
+      name: 'hoaxuyenviet',
+      description: 'thanh toan don hang',
+      amount: 200000,
+      panelLabel: 'Thanh toan',
+      allowRememberMe: false,
+      email: 'nqthai95@gmail.com',
+      currency: 'vnd'
+    });
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation:
+  window.addEventListener('popstate', function () {
+    handler.close();
+  });
+</script>
