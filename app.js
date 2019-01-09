@@ -7,7 +7,10 @@ const app = require('express')(),
   cors = require('cors'),
   htmlContentRouter = require('./routers/htmlContent'),
   productRouter = require('./routers/product'),
-  stripe = require('./utils/stripe');
+  orderRouter = require('./routers/order'),
+  userRouter = require('./routers/user'),
+  stripeRouter = require('./routers/stripe'),
+  emailRouter = require('./routers/email');
 
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -21,11 +24,12 @@ app.use(cors());
 
 app.use('/', htmlContentRouter);
 app.use('/', productRouter);
+app.use('/', orderRouter);
+app.use('/', userRouter);
+app.use('/', stripeRouter);
+app.use('/', emailRouter);
 
-//test stripe
-app.post('/charge', (req, res) => {
-  stripe.chargeOrder(req.body.stripeTokenId, req.body.data, res);
-})
+
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

@@ -44,3 +44,5 @@ router.get('/order//searchByFilter', (req, res) => {
     util.execFunction(err, data, res);
   })
 })
+
+module.exports = router;

@@ -25,6 +25,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.1",
+    "nodemailer": "^5.0.1",
     "nodemon": "^1.18.9",
     "stripe": "^6.20.0"
   }

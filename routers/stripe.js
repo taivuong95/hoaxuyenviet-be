@@ -1,5 +1,7 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY),
+  router = require('express').Router;
 
+// charge order 
 let chargeOrder = (tokenId, data, res) => {
   console.log(tokenId);
   console.log(data);
@@ -19,6 +21,9 @@ let chargeOrder = (tokenId, data, res) => {
   })
 }
 
-module.exports = {
-  chargeOrder
-}
+// charge to stripe 
+router.post('/checkout/charge', (req, res) => {
+  stripe.chargeOrder(req.body.stripeTokenId, req.body.data, res);
+})
+
+module.exports = router;
