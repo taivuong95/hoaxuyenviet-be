@@ -1,4 +1,4 @@
-const router = require('express').Router,
+const router = require('express').Router(),
   util = require('../utils/utilities');
 
 let userModel = require('../models/userModel');

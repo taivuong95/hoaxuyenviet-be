@@ -1,4 +1,4 @@
-const router = require('express').Router,
+const router = require('express').Router(),
   email = require('nodemailer'),
   util = require('../utils/utilities');
 
@@ -36,12 +36,12 @@ router.post('/sendEmail', function (req, res) {
     html: '<h1>Chào <font color="red">' + 'Thai' + '</font>,</h1><br><h3>Bạn đã đặt thành công đơn hàng: <font color="blue">' + '001' + '</font></h3><br><p>Xin hãy chờ chúng tôi xử lý đơn hàng. </p><br><p>Chúc bạn một ngày vui vẻ!</p><p>Cửa hàng đồ cũ Cao Cường,</p>'
   };
 
-  sendMail(infoMailCustomer, res);
+  sendEmail(infoMailCustomer, res);
 
 });
 
 // send email
-sendEmail = (mailInfo, res) => {
+let sendEmail = (mailInfo, res) => {
   transporter.sendMail(mailInfo, (err, info) => {
     util.execFunction(err, info, res)
   })

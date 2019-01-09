@@ -1,5 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY),
-  router = require('express').Router;
+  router = require('express').Router();
 
 // charge order 
 let chargeOrder = (tokenId, data, res) => {
