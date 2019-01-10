@@ -1,5 +1,6 @@
 const router = require('express').Router(),
-  util = require('../utils/utilities');
+  util = require('../utils/utilities'),
+  actionName = require('../utils/actionName');
 
 let userModel = require('../models/userModel');
 

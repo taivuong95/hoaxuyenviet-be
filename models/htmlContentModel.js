@@ -25,16 +25,25 @@ let schema = new mg.Schema({
       eventLink: String
     }],
   },
-
   otherSlide: {
-    firstSlide: [{
-      image: String,
-      eventLink: String
-    }],
-    secondSlide: [{
-      image: String,
-      eventLink: String
-    }],
+    firstSlide: {
+      id: String,
+      name: String,
+      active: String,
+      categoryDisplay: [{
+        image: String,
+        eventLink: String
+      }]
+    },
+    secondSlide: {
+      id: String,
+      name: String,
+      active: String,
+      categoryDisplay: [{
+        image: String,
+        eventLink: String
+      }]
+    }
   }
 }, options);
 
