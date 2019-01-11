@@ -4,11 +4,12 @@ const router = require('express').Router(),
 
 let productModel = require('../models/productModel');
 
+const categoryPageOption = 'images type form event color holiday productName price discount new sale hot ';
 
 // Create new product
 router.post('/product', (req, res) => {
   productModel.create(req.body, (err, data) => {
-    util.execFunction(err, data, res);
+    util.execFunction(err, actionName.CREATED, res);
   })
 })
 
@@ -20,14 +21,14 @@ router.patch('/product/:id', (req, res) => {
 })
 
 // Delete product by id
-router.delete('/product:id', (req, res) => {
+router.delete('/product/:id', (req, res) => {
   productModel.findByIdAndDelete(req.params.id, (err, data) => {
     util.execFunction(err, actionName.DELETED, res);
   })
 })
 
 // Get product by id
-router.get('/product:id', (req, res) => {
+router.get('/product/:id', (req, res) => {
   productModel.findById(req.params.id, (err, data) => {
     util.execFunction(err, data, res);
   })
@@ -35,16 +36,22 @@ router.get('/product:id', (req, res) => {
 
 // Get product list
 router.get('/productList', (req, res) => {
-  productModel.find((err, data) => {
-    util.execFunction(err, data, res);
-  })
-})
-
-// Get product by conditions
-router.get('/product/searchByFilter', (req, res) => {
-  productModel.find(req.body, (err, data) => {
-    util.execFunction(err, data, res);
-  })
+  if (req.query.page) {
+    const condition = {};
+    condition[req.query.of] = {
+      "$in": [req.query.by]
+    }
+    if (req.query.page === 'category') {
+      // get product list for category page by condition
+      productModel.find(condition, categoryPageOption.replace(req.query.of, ''), (err, data) => {
+        util.execFunction(err, data, res);
+      })
+    }
+  } else {
+    productModel.find((err, data) => {
+      util.execFunction(err, data, res);
+    })
+  }
 })
 
 
