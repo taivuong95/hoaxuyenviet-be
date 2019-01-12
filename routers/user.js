@@ -1,5 +1,6 @@
-const router = require('express').Router,
-  util = require('../utils/utilities');
+const router = require('express').Router(),
+  util = require('../utils/utilities'),
+  actionName = require('../utils/actionName');
 
 let userModel = require('../models/userModel');
 
@@ -44,3 +45,5 @@ router.get('/user/searchByFilter', (req, res) => {
     util.execFunction(err, data, res);
   })
 })
+
+module.exports = router;

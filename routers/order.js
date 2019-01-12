@@ -1,9 +1,10 @@
-const router = require('express').Router,
-  util = require('../utils/utilities');
+const router = require('express').Router(),
+  util = require('../utils/utilities'),
+  actionName = require('../utils/actionName');
 
 let orderModel = require('../models/orderModel');
 
-// Create order
+// Create new order
 router.post('/order', (req, res) => {
   orderModel.create(req.body, (err, data) => {
     util.execFunction(err, data, res);
@@ -18,7 +19,7 @@ router.patch('/order/:id', (req, res) => {
 })
 
 // Delete order by id
-router.delete('/order:id', (req, res) => {
+router.delete('/order/:id', (req, res) => {
   orderModel.findByIdAndDelete(req.params.id, (err, data) => {
     util.execFunction(err, actionName.DELETED, res);
   })
@@ -38,9 +39,11 @@ router.get('/order/List', (req, res) => {
   })
 })
 
-// Get order/ by conditions
-router.get('/order//searchByFilter', (req, res) => {
+// Get order by conditions
+router.get('/order/searchByFilter', (req, res) => {
   orderModel.find(req.body, (err, data) => {
     util.execFunction(err, data, res);
   })
 })
+
+module.exports = router;

@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "name": "hoaxuyenviet-be",
+  "builds": [{
+    "src": "*.js",
+    "use": "@now/node-server"
+  }],
+  "env": {
+    "DB_USER": "nqthai95",
+    "DB_PW": "Hoaxuyenviet1",
+    "DB_NAME": "hoaxuyenviet",
+    "SECRETKEY": "rWbyYlFRwTfE_4J1gR_cPwkkxCj1B0HPmXfhSDO-8hs",
+    "STRIPE_PUBLISH_KEY": "pk_test_gUOofIWJiaQuU1NKoTkeTLcg",
+    "STRIPE_SECRET_KEY": "sk_test_HNU1GPJJR5CE7kodqbf5hIo7",
+    "MAIL_USER": "docucaocuong.it@gmail.com",
+    "MAIL_PW": "Docucaocuong@123"
+  },
+  "routes": [{
+    "src": "/(.*)",
+    "dest": "app.js"
+  }]
+}

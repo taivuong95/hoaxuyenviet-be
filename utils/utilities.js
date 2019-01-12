@@ -1,4 +1,4 @@
-const execFunction = (err, errCode = data, res) => {
+const execFunction = (err, data, res, errCode = 404) => {
   if (err) {
     res.status(errCode).json(err);
   } else {
@@ -7,5 +7,5 @@ const execFunction = (err, errCode = data, res) => {
 };
 
 module.exports = {
-  execFunction: execFunction
-};
+  execFunction
+}

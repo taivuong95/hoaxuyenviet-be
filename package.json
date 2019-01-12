@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
+  "engines": {
+    "node": "8.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/quocthai95/hoaxuyenviet-be.git"
@@ -25,6 +28,8 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.1",
-    "nodemon": "^1.18.9"
+    "nodemailer": "^5.0.1",
+    "nodemon": "^1.18.9",
+    "stripe": "^6.20.0"
   }
 }

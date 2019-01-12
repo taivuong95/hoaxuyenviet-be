@@ -10,11 +10,11 @@ router.post("/htmlContent", (req, res) => {
     if (data) {
       htmlContentModel.updateOne(req.body, (err, data) => {
         util.execFunction(err, actionName.UPDATED, res);
-      });
+      })
     } else {
       htmlContentModel.create(req.body, (err, data) => {
         util.execFunction(err, actionName.CREATED, res);
-      });
+      })
     }
   });
 });
@@ -23,7 +23,7 @@ router.post("/htmlContent", (req, res) => {
 router.get("/htmlContent", (req, res) => {
   htmlContentModel.findOne((err, data) => {
     util.execFunction(err, data, res);
-  });
-});
+  })
+})
 
 module.exports = router;

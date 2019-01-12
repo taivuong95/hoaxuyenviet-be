@@ -5,7 +5,8 @@ const options = {
   collection: 'productList',
   _id: false,
   id: false,
-  versionKey: false
+  versionKey: false,
+  timestamps: true
 }
 let schema = new mg.Schema({
   _id: {
@@ -17,11 +18,11 @@ let schema = new mg.Schema({
     type: Array,
     required: true
   },
-  productType: Array,
-  productForm: Array,
-  productEvent: Array,
-  productColor: Array,
-  productHoliday: Array,
+  type: Array,
+  form: Array,
+  event: Array,
+  color: Array,
+  holiday: Array,
   productName: {
     type: String,
     required: true
