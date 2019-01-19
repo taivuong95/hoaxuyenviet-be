@@ -7,20 +7,21 @@ let userModel = require("../models/userModel");
 router.post("/adminLogin", (req, res) => {
   let user = new userModel();
   userModel.findById(req.body.userphone, async (err, data) => {
-    if (err) {
-      res.statusCode(403);
+    if (err || !data) {
+      res.status(403).json(err);
     } else {
+      data = data.toJSON();
       if (
         await user.validatePassword(
           req.body.password,
           data.userPermission.password
         )
       ) {
-        data = data.toJSON();
-        data.userPermission.password = "";
         const token = jwt.createToken(data);
         res.json({
-          userInfo: data,
+          userPhone: data._id,
+          auth: true,
+          role: data.userPermission.role,
           token
         });
       }

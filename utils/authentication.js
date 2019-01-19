@@ -12,7 +12,7 @@ function verifyToken(req, res, next) {
     const token = bearerHeader.split(" ")[1];
     jwt.verify(req.token, process.env.SECRETKEY, (err, decodedData) => {
       if (err) {
-        res.sendStatus(403);
+        res.status(403).json(err);
       } else {
         req.userData = decodedData;
         next();
