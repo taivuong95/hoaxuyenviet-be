@@ -1,29 +1,45 @@
 const router = require("express").Router(),
   util = require("../utils/utilities"),
-  actionName = require("../utils/actionName");
+  actionName = require("../utils/actionName"),
+  jwt = require('../utils/authentication');;
 
 let productModel = require("../models/productModel");
 const categoryPageOption = 'images type form event color holiday productName price discount new sale hot ';
 
 // Create new product
-router.post("/product", (req, res) => {
-  productModel.create(req.body, (err, data) => {
-    util.execFunction(err, actionName.CREATED, res);
-  })
+router.post("/product", jwt.verifyToken, (req, res) => {
+  if (req.userData.userPermission.role === 'ADMIN') {
+    productModel.create(req.body, (err, data) => {
+      util.execFunction(err, actionName.CREATED, res);
+    })
+  } else {
+    util.errFunction(res, 403, 'Bạn không có quyền thay đổi! Vui lòng liên hệ người quản trị!', 001)
+  }
+
 });
 
 // Update product by id
-router.patch("/product/:id", (req, res) => {
-  productModel.findByIdAndUpdate(req.params.id, req.body, (err, data) => {
-    util.execFunction(err, actionName.UPDATED, res);
-  })
+router.patch("/product/:id", jwt.verifyToken, (req, res) => {
+  if (req.userData.userPermission.role === 'ADMIN') {
+    productModel.findByIdAndUpdate(req.params.id, req.body, (err, data) => {
+      util.execFunction(err, actionName.UPDATED, res);
+    })
+  } else {
+    util.errFunction(res, 403, 'Bạn không có quyền thay đổi! Vui lòng liên hệ người quản trị!', 001);
+  }
+
 })
 
 // Delete product by id
-router.delete('/product/:id', (req, res) => {
-  productModel.findByIdAndDelete(req.params.id, (err, data) => {
-    util.execFunction(err, actionName.DELETED, res);
-  })
+router.delete('/product/:id', jwt.verifyToken, (req, res) => {
+  if (req.userData.userPermission.role === 'ADMIN') {
+    productModel.findByIdAndDelete(req.params.id, (err, data) => {
+      util.execFunction(err, actionName.DELETED, res);
+    })
+  } else {
+    util.errFunction(res, 403, 'Bạn không có quyền thay đổi! Vui lòng liên hệ người quản trị!', 001);
+
+  }
 })
 
 // Get product by id
@@ -49,6 +65,8 @@ router.get('/productList', (req, res) => {
   } else {
     productModel.find((err, data) => {
       util.execFunction(err, data, res);
+    }).sort({
+      updatedAt: -1
     })
   }
 })

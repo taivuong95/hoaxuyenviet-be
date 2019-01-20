@@ -1,30 +1,30 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const util = require('../utils/utilities');
 
 // create new Token
 function createToken(userData) {
   return jwt.sign(userData, process.env.SECRETKEY);
 }
 
-
 // verify token for authenticated requests
 function verifyToken(req, res, next) {
-  const bearerHeader = req.headers['authorization'];
-  if (typeof bearerHeader !== 'undefined') {
-    const token = bearerHeader.split(' ')[1];
-    jwt.verify(req.token, 'secret', (err, data) => {
+  const bearerHeader = req.headers["authorization"];
+  if (typeof bearerHeader !== "undefined") {
+    const token = bearerHeader.split(" ")[1];
+    jwt.verify(token, process.env.SECRETKEY, (err, decodedData) => {
       if (err) {
-        res.sendStatus(403);
+        util.errFunction(res, 403, 'Không có quyền hoặc đã hết thời gian đăng nhập! Vui lòng đăng nhập lại.', 002);
       } else {
-        req.userData = data;
+        req.userData = decodedData;
         next();
       }
-    })
+    });
   } else {
-    res.sendStatus(403);
+    util.errFunction(res, 403, 'Không có quyền hoặc đã hết thời gian đăng nhập! Vui lòng đăng nhập lại.', 002);
   }
 }
 
 module.exports = {
   createToken: createToken,
   verifyToken: verifyToken
-}
+};
