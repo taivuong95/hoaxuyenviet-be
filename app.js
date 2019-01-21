@@ -2,9 +2,10 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 require("./utils/db");
-const app = require("express")(),
+const express = require("express"),
   bodyParser = require("body-parser"),
   cors = require("cors"),
+  path = require('path'),
   htmlContentRouter = require("./routers/htmlContent"),
   productRouter = require("./routers/product"),
   orderRouter = require("./routers/order"),
@@ -12,7 +13,7 @@ const app = require("express")(),
   stripeRouter = require("./routers/stripe"),
   emailRouter = require("./routers/email"),
   authRouter = require("./routers/authentication");
-
+const app = express();
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -26,6 +27,7 @@ app.use(
   })
 );
 app.use(cors());
+app.use(express.static(path.join(__dirname + '/clientside/build')));
 
 app.use("/", htmlContentRouter);
 app.use("/", productRouter);
@@ -34,6 +36,11 @@ app.use("/", userRouter);
 app.use("/", stripeRouter);
 app.use("/", emailRouter);
 app.use("/", authRouter);
+
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname + '/clientside/build/index.html'));
+});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
