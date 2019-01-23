@@ -27,7 +27,7 @@ app.use(
   })
 );
 app.use(cors());
-app.use(express.static(path.join(__dirname + '/clientside/build')));
+// app.use(express.static(path.join(__dirname + '/clientside/build')));
 
 app.use("/", htmlContentRouter);
 app.use("/", productRouter);
@@ -38,9 +38,9 @@ app.use("/", emailRouter);
 app.use("/", authRouter);
 
 
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/clientside/build/index.html'));
-});
+// app.get('/*', function (req, res) {
+//   res.sendFile(path.join(__dirname + '/clientside/build/index.html'));
+// });
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

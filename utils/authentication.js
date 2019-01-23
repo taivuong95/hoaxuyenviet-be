@@ -3,7 +3,13 @@ const util = require('../utils/utilities');
 
 // create new Token
 function createToken(userData) {
-  return jwt.sign(userData, process.env.SECRETKEY);
+  if (userData.userPermission.role === 'ADMIN') {
+    return jwt.sign(userData, process.env.SECRETKEY, {
+      expiresIn: "3 days"
+    });
+  } else {
+    return jwt.sign(userData, process.env.SECRETKEY);
+  }
 }
 
 // verify token for authenticated requests
@@ -13,14 +19,14 @@ function verifyToken(req, res, next) {
     const token = bearerHeader.split(" ")[1];
     jwt.verify(token, process.env.SECRETKEY, (err, decodedData) => {
       if (err) {
-        util.errFunction(res, 403, 'Không có quyền hoặc đã hết thời gian đăng nhập! Vui lòng đăng nhập lại.', 002);
+        util.errFunction(res, 403, 'Không có quyền hoặc đã hết thời gian đăng nhập! Vui lòng đăng nhập lại.', '002');
       } else {
         req.userData = decodedData;
         next();
       }
     });
   } else {
-    util.errFunction(res, 403, 'Không có quyền hoặc đã hết thời gian đăng nhập! Vui lòng đăng nhập lại.', 002);
+    util.errFunction(res, 403, 'Không có quyền hoặc đã hết thời gian đăng nhập! Vui lòng đăng nhập lại.', '002');
   }
 }
 
