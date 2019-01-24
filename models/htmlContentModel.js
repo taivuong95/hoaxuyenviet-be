@@ -55,7 +55,15 @@ let schema = new mg.Schema(
           }
         ]
       }
-    }
+    },
+    social: [
+      {
+        id: String,
+        visible: Boolean,
+        link: String,
+        iconName: String
+      }
+    ]
   },
   options
 );
