@@ -3,8 +3,8 @@ const router = require("express").Router(),
 
 let userModel = require("../models/userModel");
 
-// Login
-router.post("/adminLogin", (req, res) => {
+// Admin Login
+router.post("/hoaxuyenvietLogin", (req, res) => {
   let user = new userModel();
   userModel.findById(req.body.userphone, async (err, data) => {
     if (err || !data) {
@@ -22,7 +22,13 @@ router.post("/adminLogin", (req, res) => {
           userPhone: data._id,
           auth: true,
           role: data.userPermission.role,
-          token
+          token,
+          userInfo: data.userInfo
+        });
+      } else {
+        res.status(403).json({
+          message: "Sai Mật Khẩu Hoặc Tài Khoản. Vui Lòng Nhập Lại!",
+          code: "007"
         });
       }
     }

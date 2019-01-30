@@ -6,7 +6,7 @@ const router = require("express").Router(),
 let htmlContentModel = require("../models/htmlContentModel");
 
 // Create or update html content
-router.post("/htmlContent", jwt.verifyToken, (req, res) => {
+router.post("/htmlContent", jwt.verifyTokenAdmin, (req, res) => {
   htmlContentModel.findById("htmlContent", (err, data) => {
     if (data) {
       htmlContentModel.updateOne(req.body, (err, data) => {

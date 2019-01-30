@@ -8,51 +8,24 @@ const categoryPageOption =
   "images type form event color holiday productName price discount new sale hot ";
 
 // Create new product
-router.post("/product", jwt.verifyToken, (req, res) => {
-  if (req.userData.userPermission.role === "ADMIN") {
-    productModel.create(req.body, (err, data) => {
-      util.execFunction(err, actionName.CREATED, res);
-    });
-  } else {
-    util.errFunction(
-      res,
-      403,
-      "Bạn không có quyền thay đổi! Vui lòng liên hệ người quản trị!",
-      001
-    );
-  }
+router.post("/product", jwt.verifyTokenAdmin, (req, res) => {
+  productModel.create(req.body, (err, data) => {
+    util.execFunction(err, actionName.CREATED, res);
+  });
 });
 
 // Update product by id
-router.patch("/product/:id", jwt.verifyToken, (req, res) => {
-  if (req.userData.userPermission.role === "ADMIN") {
-    productModel.findByIdAndUpdate(req.params.id, req.body, (err, data) => {
-      util.execFunction(err, actionName.UPDATED, res);
-    });
-  } else {
-    util.errFunction(
-      res,
-      403,
-      "Bạn không có quyền thay đổi! Vui lòng liên hệ người quản trị!",
-      001
-    );
-  }
+router.patch("/product/:id", jwt.verifyTokenAdmin, (req, res) => {
+  productModel.findByIdAndUpdate(req.params.id, req.body, (err, data) => {
+    util.execFunction(err, actionName.UPDATED, res);
+  });
 });
 
 // Delete product by id
-router.delete("/product/:id", jwt.verifyToken, (req, res) => {
-  if (req.userData.userPermission.role === "ADMIN") {
-    productModel.findByIdAndDelete(req.params.id, (err, data) => {
-      util.execFunction(err, actionName.DELETED, res);
-    });
-  } else {
-    util.errFunction(
-      res,
-      403,
-      "Bạn không có quyền thay đổi! Vui lòng liên hệ người quản trị!",
-      001
-    );
-  }
+router.delete("/product/:id", jwt.verifyTokenAdmin, (req, res) => {
+  productModel.findByIdAndDelete(req.params.id, (err, data) => {
+    util.execFunction(err, actionName.DELETED, res);
+  });
 });
 
 // Get product by id

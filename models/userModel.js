@@ -1,5 +1,6 @@
 const mg = require("mongoose"),
   bcrypt = require("bcrypt");
+Schema = mg.Schema;
 
 const options = {
   autoIndex: false,
@@ -13,7 +14,7 @@ const options = {
 let schema = new mg.Schema(
   {
     _id: {
-      type: Number,
+      type: Schema.Types.Number,
       unique: true,
       index: true
     },
@@ -21,14 +22,14 @@ let schema = new mg.Schema(
       role: String,
       password: String
     },
-    userData: {
+    userInfo: {
       name: String,
       email: String,
       address: String,
       birth: Date,
-      Gender: String
-    },
-    rewardPoints: Number
+      gender: String,
+      rewardPoints: Number
+    }
   },
   options
 );
