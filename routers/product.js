@@ -44,13 +44,17 @@ router.get("/productList", (req, res) => {
     };
     if (req.query.page === "category") {
       // get product list for category page by condition
-      productModel.find(
-        condition,
-        categoryPageOption.replace(req.query.of, ""),
-        (err, data) => {
-          util.execFunction(err, data, res);
-        }
-      );
+      productModel
+        .find(
+          condition,
+          categoryPageOption.replace(req.query.of, ""),
+          (err, data) => {
+            util.execFunction(err, data, res);
+          }
+        )
+        .sort({
+          updatedAt: -1
+        });
     }
   } else {
     productModel
@@ -61,6 +65,25 @@ router.get("/productList", (req, res) => {
         updatedAt: -1
       });
   }
+});
+
+// search product list by name
+router.post("/productList/search", (req, res) => {
+  productModel
+    .find(
+      {
+        productName: {
+          $regex: `${req.body.name.trim()}`,
+          $options: "i"
+        }
+      },
+      (err, data) => {
+        util.execFunction(err, data, res);
+      }
+    )
+    .sort({
+      updatedAt: -1
+    });
 });
 
 // Get Random products by type

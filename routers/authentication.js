@@ -22,8 +22,8 @@ router.post("/hoaxuyenvietLogin", (req, res) => {
           userPhone: data._id,
           auth: true,
           role: data.userPermission.role,
-          token,
-          userInfo: data.userInfo
+          token
+          // userInfo: data.userInfo
         });
       } else {
         res.status(403).json({

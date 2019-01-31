@@ -48,6 +48,9 @@ schema.methods.generateHash = async function(password) {
 // validate password
 schema.methods.validatePassword = async function(password, dbpassword) {
   return await bcrypt.compareSync(password, dbpassword, (err, res) => {
+    if (err) {
+      return err;
+    }
     return res;
   });
 };
