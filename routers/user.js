@@ -6,7 +6,7 @@ const router = require("express").Router(),
 let userModel = require("../models/userModel");
 
 // Create admin
-router.post("/user/createAdmin", async (req, res) => {
+router.post("/user/createHoaXuyenVietAdmin", async (req, res) => {
   let user = new userModel(req.body);
   user.userPermission.role = "ADMIN";
   user.userPermission.password = await user.generateHash(

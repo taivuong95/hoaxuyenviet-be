@@ -12,10 +12,9 @@ router.post("/hoaxuyenvietLogin", (req, res) => {
     } else {
       data = data.toJSON();
       if (
-        await user.validatePassword(
-          req.body.password,
-          data.userPermission.password
-        )
+        await user
+          .validatePassword(req.body.password, data.userPermission.password)
+          .catch(err => res.status(400).json(err))
       ) {
         const token = jwt.createToken(data);
         res.json({

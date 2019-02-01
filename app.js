@@ -13,6 +13,7 @@ const express = require("express"),
   stripeRouter = require("./routers/stripe"),
   emailRouter = require("./routers/email"),
   cartRouter = require("./routers/cart"),
+  blogRouter = require("./routers/blog"),
   authRouter = require("./routers/authentication");
 const app = express();
 app.use(
@@ -38,6 +39,7 @@ app.use("/", stripeRouter);
 app.use("/", emailRouter);
 app.use("/", authRouter);
 app.use("/", cartRouter);
+app.use("/", blogRouter);
 
 // app.get('/*', function (req, res) {
 //   res.sendFile(path.join(__dirname + '/clientside/build/index.html'));
