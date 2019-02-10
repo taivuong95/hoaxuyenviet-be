@@ -37,6 +37,8 @@ router.get("/order/:id", jwt.verifyToken, (req, res) => {
 router.get("/orderList", jwt.verifyTokenAdmin, (req, res) => {
   orderModel.find((err, data) => {
     util.execFunction(err, data, res);
+  }).sort({
+    updatedAt: -1
   });
 });
 

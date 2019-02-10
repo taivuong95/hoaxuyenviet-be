@@ -25,7 +25,9 @@ router.delete("/blog/:id", jwt.verifyTokenAdmin, (req, res) => {
 });
 
 router.get("/blog/:id", (req, res) => {
-  blogModel.findOne({ _id: req.params.id }, (err, data) => {
+  blogModel.findOne({
+    _id: req.params.id
+  }, (err, data) => {
     util.execFunction(err, data, res);
   });
 });
@@ -33,6 +35,8 @@ router.get("/blog/:id", (req, res) => {
 router.get("/blogs", (req, res) => {
   blogModel.find((err, data) => {
     util.execFunction(err, data, res);
+  }).sort({
+    updatedAt: -1
   });
 });
 

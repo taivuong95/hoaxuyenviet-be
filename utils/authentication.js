@@ -46,7 +46,7 @@ function verifyTokenAdmin(req, res, next) {
   if (typeof bearerHeader !== "undefined") {
     const token = bearerHeader.split(" ")[1];
     jwt.verify(token, process.env.SECRETKEY, (err, decodedData) => {
-      if (decodedData.userPermission.role !== "ADMIN" || err) {
+      if (!decodedData || decodedData.userPermission.role !== "ADMIN" || err) {
         util.errFunction(
           res,
           403,

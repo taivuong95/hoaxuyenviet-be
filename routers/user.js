@@ -46,8 +46,11 @@ router.delete("/user/:id", jwt.verifyTokenAdmin, (req, res) => {
 // Get user/ by id
 router.get("/user/:id", jwt.verifyToken, (req, res) => {
   userModel.findById(
-    req.params.id,
-    { "userPermission.password": 0, createdAt: 0, updatedAt: 0 },
+    req.params.id, {
+      "userPermission.password": 0,
+      createdAt: 0,
+      updatedAt: 0
+    },
     (err, data) => {
       util.execFunction(err, data, res);
     }
@@ -60,7 +63,11 @@ router.get("/userList", jwt.verifyTokenAdmin, (req, res) => {
     .find((err, data) => {
       util.execFunction(err, data, res);
     })
-    .select({ "userPermission.password": 0 });
+    .select({
+      "userPermission.password": 0
+    }).sort({
+      updatedAt: -1
+    });
 });
 
 // Get user by conditions

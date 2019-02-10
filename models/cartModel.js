@@ -6,8 +6,7 @@ const options = {
   timestamps: true
 };
 
-let schema = new mg.Schema(
-  {
+let schema = new mg.Schema({
     userInfo: {
       type: Schema.Types.Number,
       ref: "User"
