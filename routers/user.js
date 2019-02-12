@@ -25,7 +25,17 @@ router.post("/user/createUser", async (req, res) => {
     user.userPermission.password
   );
   userModel.create(user, (err, data) => {
-    util.execFunction(err, actionName.CREATED, res);
+    if (err && err.code === 11000) {
+      util.errFunction(
+        res,
+        400,
+        "Số Điện Thoại đã tồn tại! Vui Lòng nhập lại!",
+        "006"
+      );
+    } else {
+      data.userPermission.password = undefined;
+      util.execFunction(err, data, res);
+    }
   });
 });
 
@@ -46,7 +56,8 @@ router.delete("/user/:id", jwt.verifyTokenAdmin, (req, res) => {
 // Get user/ by id
 router.get("/user/:id", jwt.verifyToken, (req, res) => {
   userModel.findById(
-    req.params.id, {
+    req.params.id,
+    {
       "userPermission.password": 0,
       createdAt: 0,
       updatedAt: 0
@@ -65,7 +76,8 @@ router.get("/userList", jwt.verifyTokenAdmin, (req, res) => {
     })
     .select({
       "userPermission.password": 0
-    }).sort({
+    })
+    .sort({
       updatedAt: -1
     });
 });

@@ -10,7 +10,16 @@ const categoryPageOption =
 // Create new product
 router.post("/product", jwt.verifyTokenAdmin, (req, res) => {
   productModel.create(req.body, (err, data) => {
-    util.execFunction(err, actionName.CREATED, res);
+    if (err && err.code === 11000) {
+      util.errFunction(
+        res,
+        400,
+        "Mã Sản Phẩm đã tồn tại! Vui Lòng nhập lại!",
+        "006"
+      );
+    } else {
+      util.execFunction(err, actionName.CREATED, res);
+    }
   });
 });
 

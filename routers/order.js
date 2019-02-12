@@ -8,7 +8,16 @@ let orderModel = require("../models/orderModel");
 // Create new order
 router.post("/order", (req, res) => {
   orderModel.create(req.body, (err, data) => {
-    util.execFunction(err, actionName.CREATED, res);
+    if (err && err.code === 11000) {
+      util.errFunction(
+        res,
+        400,
+        "Mã Đơn Hàng đã tồn tại! Vui Lòng nhập lại!",
+        "006"
+      );
+    } else {
+      util.execFunction(err, actionName.CREATED, res);
+    }
   });
 });
 
@@ -35,11 +44,13 @@ router.get("/order/:id", jwt.verifyToken, (req, res) => {
 
 // Get order/ list
 router.get("/orderList", jwt.verifyTokenAdmin, (req, res) => {
-  orderModel.find((err, data) => {
-    util.execFunction(err, data, res);
-  }).sort({
-    updatedAt: -1
-  });
+  orderModel
+    .find((err, data) => {
+      util.execFunction(err, data, res);
+    })
+    .sort({
+      updatedAt: -1
+    });
 });
 
 // Get order by conditions
