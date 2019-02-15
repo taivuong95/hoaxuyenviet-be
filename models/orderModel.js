@@ -35,15 +35,16 @@ let schema = new mg.Schema(
     order: {
       note: String,
       payment: String,
-      deliveryDate: Date,
+      deliveryDate: String,
       status: String,
       productOrder: [
         {
-          name: String,
+          productName: String,
           price: Number,
           quantity: Number,
           discount: Number,
-          images: Array
+          images: Array,
+          _id: String
         }
       ],
       finalPrice: Number

@@ -53,11 +53,16 @@ router.get("/orderList", jwt.verifyTokenAdmin, (req, res) => {
     });
 });
 
-// Get order by conditions
-// router.get("/order/searchByFilter", (req, res) => {
-//   orderModel.find(req.body, (err, data) => {
-//     util.execFunction(err, data, res);
-//   });
-// });
+//get order by userphone
+router.get("/orderList/:userId", jwt.verifyToken, (req, res) => {
+  orderModel.find(
+    {
+      "customerInfo.phone": req.params.userId
+    },
+    (err, data) => {
+      util.execFunction(err, data, res);
+    }
+  );
+});
 
 module.exports = router;
