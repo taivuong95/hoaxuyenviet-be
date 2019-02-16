@@ -1,27 +1,27 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY),
-  router = require("express").Router();
+  util = require('../utils/utilities');
+router = require("express").Router();
 
 // charge order
 let chargeOrder = (tokenId, data, res) => {
-  console.log(tokenId);
-  console.log(data);
   stripe.charges
     .create({
       amount: data.total,
       source: tokenId,
       currency: "vnd"
-    })
-    .then(dt => {
-      console.log(dt);
-      res.json({
-        data: dt
-      });
-    })
-    .catch(err => {
+    }, function (err, charge) {
       console.log(err);
-      res.json({
-        err
-      });
+      console.log(charge);
+      if (err) {
+        util.errFunction(
+          res,
+          400,
+          "Lỗi Thanh Toán! Vui Lòng Nhập Lại Hoặc Chọn Hình Thức Thanh Toán Khác!",
+          "009"
+        );
+      } else {
+        util.execFunction(err, charge, res);
+      }
     });
 };
 

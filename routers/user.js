@@ -82,11 +82,4 @@ router.get("/userList", jwt.verifyTokenAdmin, (req, res) => {
     });
 });
 
-// Get user by conditions
-// router.get("/user/searchByFilter", (req, res) => {
-//   userModel.find(req.body, (err, data) => {
-//     util.execFunction(err, data, res);
-//   });
-// });
-
 module.exports = router;

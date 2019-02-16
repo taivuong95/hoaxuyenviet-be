@@ -8,11 +8,11 @@ let orderModel = require("../models/orderModel");
 // Create new order
 router.post("/order", (req, res) => {
   orderModel.create(req.body, (err, data) => {
-    if (err && err.code === 11000) {
+    if (err) {
       util.errFunction(
         res,
         400,
-        "Mã Đơn Hàng đã tồn tại! Vui Lòng nhập lại!",
+        "Lỗi Đặt Hàng! Vui Lòng Đặt Lại Hoặc Liên Hệ Chủ Shop Nếu Đã Thanh Toán!",
         "006"
       );
     } else {
@@ -55,14 +55,15 @@ router.get("/orderList", jwt.verifyTokenAdmin, (req, res) => {
 
 //get order by userphone
 router.get("/orderList/:userId", jwt.verifyToken, (req, res) => {
-  orderModel.find(
-    {
+  orderModel.find({
       "customerInfo.phone": req.params.userId
     },
     (err, data) => {
       util.execFunction(err, data, res);
     }
-  );
+  ).sort({
+    updatedAt: -1
+  });
 });
 
 module.exports = router;
