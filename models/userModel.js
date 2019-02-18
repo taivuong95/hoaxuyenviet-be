@@ -27,7 +27,7 @@ let schema = new mg.Schema(
       name: String,
       email: String,
       address: String,
-      birth: Date,
+      birth: String,
       gender: String,
       rewardPoints: Number
     }

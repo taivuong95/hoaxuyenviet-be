@@ -82,48 +82,4 @@ router.get("/userList", jwt.verifyTokenAdmin, (req, res) => {
     });
 });
 
-// change password
-router.post("/resetPWD", (req, res) => {
-  let user = new userModel();
-  userModel.findById(
-    req.body.userPhone,
-    {
-      createdAt: 0,
-      updatedAt: 0
-    },
-    async (err, data) => {
-      if (err || !data) {
-        res.status(403).json(err);
-      } else {
-        data = data.toJSON();
-        if (
-          await user
-            .validatePassword(req.body.resetLink, data.userPermission.resetLink)
-            .catch(err =>
-              res.status(403).json({
-                message:
-                  "Không Đúng Tài Khoản Hoặc Đường Dẫn Đặt Lại Mật Khẩu Không Đúng. Vui Lòng Kiểm Tra Hoặc Thao Tác Lại!",
-                code: "010"
-              })
-            )
-        ) {
-          data.userPermission.password = await user.generateHash(
-            req.body.password
-          );
-          data.userPermission.resetLink = null;
-          userModel.findByIdAndUpdate(req.body.userPhone, data, (err, dt) => {
-            util.execFunction(err, actionName.UPDATED, res);
-          });
-        } else {
-          res.status(403).json({
-            message:
-              "Không Đúng Tài Khoản Hoặc Đường Dẫn Đặt Lại Mật Khẩu Không Đúng. Vui Lòng Kiểm Tra Hoặc Thao Tác Lại!",
-            code: "010"
-          });
-        }
-      }
-    }
-  );
-});
-
 module.exports = router;
