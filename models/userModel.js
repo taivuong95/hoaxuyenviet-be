@@ -20,7 +20,8 @@ let schema = new mg.Schema(
     },
     userPermission: {
       role: String,
-      password: String
+      password: String,
+      resetLink: String
     },
     userInfo: {
       name: String,
