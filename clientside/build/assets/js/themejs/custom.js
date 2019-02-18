@@ -74,8 +74,25 @@ $(document).ready(function () {
         $(".menu_toggle").slideUp("slow");
         $("#search").slideUp("slow");
         $(".header-search.dropdown-toggle").removeClass('active');
-        return false;
+        return true;
     });
+
+    // close cart menu when click outside cart menu
+    $('body').on('click', function (e) {
+        if (!$('#cart .dropdown-toggle').is(e.target) 
+            && $('#cart .dropdown-toggle').has(e.target).length === 0 
+            && $('.active').has(e.target).length === 0
+        ) {
+            // $('#cart').removeClass('open');
+            // $('#cart .dropdown-toggle').removeClass('active');
+            $(".cart-menu").slideUp("slow");
+            
+        }
+    });
+
+   
+
+
     // $("#form-currency .dropdown-toggle").click(function() {
     //     $('#form-currency').toggleClass("active");
     //     $(".language-menu").slideUp("slow");
@@ -624,6 +641,43 @@ function responsivecolumn() {
         }
         lastScrollTop = st;
     });
+
+    if ($(document).width() >= 980) {
+        $(window).bind("scroll", function () {
+            var scrollHeight = $(document).height();
+            var scrollPosition = $(window).height() + $(window).scrollTop();
+            if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+                // when scroll to bottom of the page
+                // $('#footer').css({ "position": "absolute", "bottom": "0" });
+            }
+
+        });
+
+    }
+
+    // var height;
+    // $(window).scroll(function () {
+    //     height = $(document).height() - $(window).height();
+    //     console.log(height + " " + $(this).scrollTop());
+    //     if ($(this).scrollTop() > height) {
+    //         $('footer').slideDown(300);
+    //     } else {
+    //         $('footer').slideUp(300);
+    //     }
+    // });
+    // $(window).bind('resize', () => {
+    //     $(window).scroll(function () {
+    //         height = $(document).height() - $(window).height();
+    //         console.log(height + " " + $(this).scrollTop());
+    //         if ($(this).scrollTop() > height) {
+    //             $('footer').slideDown(300);
+    //         } else {
+    //             $('footer').slideUp(300);
+    //         }
+    //     });
+    // })
+
+
     // if ($(document).width() >= 980) {
     //     $(window).bind('scroll', function () {
     //         var st = $(this).scrollTop();
