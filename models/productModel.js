@@ -37,7 +37,7 @@ let schema = new mg.Schema(
     new: Boolean,
     sale: Boolean,
     hot: Boolean,
-    description: Array,
+    description: String,
     saleDayBegin: Date,
     saleDayEnd: Date
   },
