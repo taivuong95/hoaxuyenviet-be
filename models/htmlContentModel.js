@@ -10,7 +10,7 @@ const options = {
 let schema = new mg.Schema(
   {
     _id: String,
-
+    searchPlaceHolder: String,
     bannerSlide: [
       {
         image: String,
