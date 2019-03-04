@@ -1,0 +1,10 @@
+GET http://localhost:8000/htmlContent 
+
+###
+
+POST http://localhost:8000/productList/search
+Content-Type: application/json
+
+{
+  "name": "hồng"
+}

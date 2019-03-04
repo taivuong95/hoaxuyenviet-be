@@ -44,10 +44,22 @@ router.get("/product/:id", (req, res) => {
   });
 });
 
+// Get product list by admin
+router.get("/productList/admin", jwt.verifyTokenAdmin, (req, res) => {
+  productModel
+    .find((err, data) => {
+      util.execFunction(err, data, res);
+    })
+    .sort({
+      updatedAt: -1
+    });
+});
+
 // Get product list
 router.get("/productList", (req, res) => {
   if (req.query.page) {
     const condition = {};
+    condition["visible"] = true;
     condition[req.query.of] = {
       $in: [req.query.by]
     };
@@ -61,13 +73,14 @@ router.get("/productList", (req, res) => {
             util.execFunction(err, data, res);
           }
         )
+        .select({ visible: true })
         .sort({
           updatedAt: -1
         });
     }
   } else {
     productModel
-      .find((err, data) => {
+      .find({ visible: true }, (err, data) => {
         util.execFunction(err, data, res);
       })
       .sort({
@@ -84,7 +97,8 @@ router.post("/productList/search", (req, res) => {
         productName: {
           $regex: `${req.body.name.trim()}`,
           $options: "i"
-        }
+        },
+        visible: true
       },
       (err, data) => {
         util.execFunction(err, data, res);
