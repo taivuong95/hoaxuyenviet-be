@@ -29,6 +29,11 @@ let schema = new mg.Schema(
       required: true,
       text: true
     },
+    searchName: {
+      type: String,
+      required: true,
+      text: true
+    },
     price: {
       type: Number,
       required: true

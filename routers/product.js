@@ -94,7 +94,7 @@ router.post("/productList/search", (req, res) => {
   productModel
     .find(
       {
-        productName: {
+        searchName: {
           $regex: `${req.body.name.trim()}`,
           $options: "i"
         },
